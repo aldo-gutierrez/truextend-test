@@ -1,0 +1,15 @@
+apply plugin: 'war'
+
+dependencies {
+
+    compile "org.jboss.resteasy:resteasy-core:4.5.5.Final"
+    compile "org.jboss.resteasy:resteasy-jaxb-provider:4.5.5.Final"
+    compile 'org.jboss.resteasy:resteasy-servlet-initializer:4.5.5.Final'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    //google()
+}
