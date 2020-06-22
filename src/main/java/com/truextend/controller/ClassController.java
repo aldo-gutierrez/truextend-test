@@ -2,10 +2,11 @@ package com.truextend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.truextend.dao.StudentClassDAO;
+import com.truextend.exception.NotFoundException;
 import com.truextend.model.Class0;
-import com.truextend.model.StudentClass;
+import com.truextend.model.Student;
 import com.truextend.service.ClassService;
+import com.truextend.service.StudentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +25,7 @@ public class ClassController {
     ClassService classService;
 
     @Autowired
-    StudentClassDAO studentClassDAO;
-
+    StudentService studentService;
 
     @GET
     @Path("/")
@@ -44,9 +43,9 @@ public class ClassController {
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=2, value="Select a Class")
     public Response selectUsers(@PathParam("id") Long id) throws JsonProcessingException {
-        Class0 class0 = classService.selectById(id);
+        Class0 class0 = classService.selectById( id );
         if (class0 == null) {
-            return Response.status(404).header("content-type", MediaType.APPLICATION_JSON).build();
+            throw new NotFoundException(String.format( "Class with Id[%d] not found", id));
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
             String result = objectMapper.writeValueAsString(class0);
@@ -79,7 +78,7 @@ public class ClassController {
         Class0 class0 = classService.selectById( id );
         if( class0 == null )
         {
-            return Response.status(404).header("content-type", MediaType.APPLICATION_JSON).entity(String.format( "Student with Id[%d] not found", id)).build();
+            throw new NotFoundException(String.format( "Class with Id[%d] not found", id));
         }
         if (map.containsKey("code")) {
             class0.setCode((String) map.get("code"));
@@ -103,25 +102,28 @@ public class ClassController {
     @ApiOperation(position=5, value="Delete a Student (AUTO)")
     public Response deleteUser( @PathParam("id") Long id )
     {
-        Class0 student = classService.selectById( id );
-        if( student == null )
+        Class0 class0 = classService.selectById( id );
+        if( class0 == null )
         {
-            return Response.status(404).header("content-type", MediaType.APPLICATION_JSON).entity(String.format( "Student with Id[%d] not found", id)).build();
+            throw new NotFoundException(String.format( "Class with Id[%d] not found", id));
         }
-        classService.delete(student);
+        classService.delete(class0);
         return Response.noContent().status( 204 ).header( "content-type", "application/json" ).build();
     }
 
     @GET
-    @Path("/{classId}/class")
+    @Path("/{classId}/students")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=1, value="Get a List of Classes")
+    @ApiOperation(position=6, value="Get a List of Classes")
     public Response listClasses(@PathParam("classId") Long classId) throws JsonProcessingException {
-        Map parameters = new HashMap();
-        parameters.put("class0.id", classId);
-        List<StudentClass> studentsClass = studentClassDAO.selectAllBy(parameters);
+        Class0 class0 = classService.selectById( classId );
+        if( class0 == null )
+        {
+            throw new NotFoundException(String.format( "Class with Id[%d] not found", classId));
+        }
+        List<Student> students = studentService.selectAllByClass(class0);
         ObjectMapper objectMapper = new ObjectMapper();
-        String result = objectMapper.writeValueAsString(studentsClass);
+        String result = objectMapper.writeValueAsString(students);
         return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
     }
 

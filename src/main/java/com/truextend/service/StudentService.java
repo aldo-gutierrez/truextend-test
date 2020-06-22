@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class StudentService {
@@ -42,6 +43,14 @@ public class StudentService {
 
     public void delete(Student student) {
         dao.delete(student);
+    }
+
+    public List<Student> selectAllByClass(Class0 class0) {
+        Map parameters = new HashMap();
+        parameters.put("class0.id", class0.getId());
+        List<StudentClass> studentsClass = studentClassDAO.selectAllBy(parameters);
+        List<Student> students = studentsClass.stream().map(studentClass -> studentClass.getStudent()).collect(Collectors.toList());
+        return students;
     }
 
     public StudentClass assignClassToStudent(Class0 class0, Student student) {

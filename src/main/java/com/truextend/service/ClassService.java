@@ -5,10 +5,14 @@ import com.truextend.dao.StudentClassDAO;
 import com.truextend.dao.StudentDAO;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
+import com.truextend.model.StudentClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class ClassService {
@@ -43,4 +47,11 @@ public class ClassService {
         dao.delete(student);
     }
 
+    public List<Class0> selectAllByStudent(Student student) {
+        Map parameters = new HashMap();
+        parameters.put("student.id", student.getId());
+        List<StudentClass> studentsClass = studentClassDAO.selectAllBy(parameters);
+        List<Class0> classes = studentsClass.stream().map(studentClass -> studentClass.getClass0()).collect(Collectors.toList());
+        return classes;
+    }
 }
