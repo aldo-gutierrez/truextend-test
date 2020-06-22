@@ -1,12 +1,10 @@
 package com.truextend.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class BaseHibernateDAO<T, K extends Serializable> {
 
@@ -25,12 +23,24 @@ public abstract class BaseHibernateDAO<T, K extends Serializable> {
     public T selectBy(String property, Object value) {
         Criteria c1 = getSession().createCriteria(getClazz());
         c1.add(Restrictions.eq(property, value));
-        return (T) c1.uniqueResult();
+        try {
+            return (T) c1.uniqueResult();
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
     }
 
     public List<T> selectAll() {
         Query query = getSession().createQuery("from " + getClazz().getName());
         return (List<T>) query.list();
+    }
+
+    public List<T> selectAllBy(Map<String, Object> map) {
+        Criteria c1 = getSession().createCriteria(getClazz());
+        for (String key : map.keySet()) {
+            c1.add(Restrictions.eq(key, map.get(key)));
+        }
+        return (List<T>) c1.list();
     }
 
     public K insert(T object) {
