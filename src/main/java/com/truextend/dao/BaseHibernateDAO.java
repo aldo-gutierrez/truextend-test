@@ -23,11 +23,7 @@ public abstract class BaseHibernateDAO<T, K extends Serializable> {
     public T selectBy(String property, Object value) {
         Criteria c1 = getSession().createCriteria(getClazz());
         c1.add(Restrictions.eq(property, value));
-        try {
-            return (T) c1.uniqueResult();
-        } catch (NonUniqueResultException ex) {
-            return null;
-        }
+        return (T) c1.uniqueResult();
     }
 
     public List<T> selectAll() {

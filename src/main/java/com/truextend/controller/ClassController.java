@@ -8,6 +8,7 @@ import com.truextend.model.StudentClass;
 import com.truextend.service.ClassService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Path("/class")
+@Transactional
 public class ClassController {
 
     @Autowired
