@@ -1,14 +1,14 @@
 package com.truextend.dao;
 
+import com.truextend.model.StudentClass;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.truextend.model.Class0;
 
 @Repository
 @Transactional
-public class ClassDAO extends BaseHibernateDAO<Class0, Long> {
+public class StudentClassDAO extends BaseHibernateDAO<StudentClass, Long>{
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -18,7 +18,7 @@ public class ClassDAO extends BaseHibernateDAO<Class0, Long> {
     }
 
     @Override
-    public Class<Class0> getClazz() {
-        return Class0.class;
+    public Class<StudentClass> getClazz() {
+        return StudentClass.class;
     }
 }
