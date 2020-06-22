@@ -1,4 +1,5 @@
 apply plugin: 'war'
+apply plugin: "findbugs"
 
 dependencies {
 
@@ -27,4 +28,14 @@ repositories {
     mavenCentral()
     jcenter()
     //google()
+}
+
+tasks.withType(FindBugs) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
 }
