@@ -57,7 +57,7 @@ tasks.withType(FindBugs) {
 }
 
 resolve {
-    outputFileName = 'TrueextendTestAPI'
+    outputFileName = 'TruextendTestAPI'
     outputFormat = 'JSON'
     prettyPrint = 'TRUE'
     classpath = sourceSets.main.runtimeClasspath
@@ -91,7 +91,7 @@ swagger {
             }
         }
         templatePath = "${project.rootDir}/swagger/templates/strapdown.html.hbs"
-        outputPath = "${project.rootDir}/swagger/TrueextendTestAPI.html"
+        outputPath = "${project.rootDir}/swagger/TruextendTestAPI.html"
         swaggerDirectory = "${project.rootDir}/swagger"
         attachSwaggerArtifact = true
     }
