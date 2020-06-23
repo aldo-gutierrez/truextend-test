@@ -101,7 +101,7 @@ public class StudentController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=5, value="Delete a Student (AUTO)")
+    @ApiOperation(position=5, value="Delete a Student")
     public Response deleteUser( @PathParam("id") Long id )
     {
         Student student = studentService.selectById( id );
@@ -116,7 +116,7 @@ public class StudentController {
     @GET
     @Path("/{studentId}/class")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=1, value="Get a List of Classes")
+    @ApiOperation(position=6, value="Get a List of Classes")
     public Response listClasses(@PathParam("studentId") Long studentId) throws JsonProcessingException {
         Student student = studentService.selectById( studentId );
         if( student == null )
@@ -132,7 +132,7 @@ public class StudentController {
     @PUT
     @Path("/{studentId}/class/{classId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Assign Class to a Student")
+    @ApiOperation(position=7, value = "Assign a Class to a Student")
     public Response assignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) throws JsonProcessingException {
         Student student = studentService.selectById( studentId );
         if( student == null )
@@ -154,8 +154,8 @@ public class StudentController {
     @DELETE
     @Path("/{studentId}/class/{classId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Remove Role from a User")
-    public Response unassignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) throws JsonProcessingException {
+    @ApiOperation(position=8, value = "Unassing a Class to a Student")
+    public Response unassignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) {
         Student student = studentService.selectById( studentId );
         if( student == null )
         {

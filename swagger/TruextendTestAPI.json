@@ -124,7 +124,7 @@
         }
       }
     },
-    "/class/{classId}/students" : {
+    "/class/{classId}/student" : {
       "get" : {
         "operationId" : "listClasses",
         "parameters" : [ {

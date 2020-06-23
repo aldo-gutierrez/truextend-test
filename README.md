@@ -22,6 +22,6 @@ http://localhost:8080/truextend/rest/class
 
  generates
  
- TruextendTestAPI.html rest documentation
- TruextendTestAPI.json swagger json file that can be used on https://editor.swagger.io/ 
+ swagger/TruextendTestAPI.html rest documentation
+ swagger/TruextendTestAPI.json swagger json file that can be used on https://editor.swagger.io/ 
 

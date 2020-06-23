@@ -75,7 +75,7 @@ public class ClassController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=4, value="Update a Student")
+    @ApiOperation(position=4, value="Update a Class")
     public Response updateUser( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
         Class0 class0 = classService.selectById( id );
         if( class0 == null )
@@ -101,7 +101,7 @@ public class ClassController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=5, value="Delete a Student (AUTO)")
+    @ApiOperation(position=5, value="Delete a Class")
     public Response deleteUser( @PathParam("id") Long id )
     {
         Class0 class0 = classService.selectById( id );
@@ -114,9 +114,9 @@ public class ClassController {
     }
 
     @GET
-    @Path("/{classId}/students")
+    @Path("/{classId}/student")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=6, value="Get a List of Classes")
+    @ApiOperation(position=6, value="Get a List of Students for a Class")
     public Response listClasses(@PathParam("classId") Long classId) throws JsonProcessingException {
         Class0 class0 = classService.selectById( classId );
         if( class0 == null )
