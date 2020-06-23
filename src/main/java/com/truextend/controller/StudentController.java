@@ -86,10 +86,10 @@ public class StudentController {
             student.setFirstName((String) map.get("firstName"));
         }
         if (map.containsKey("lastName")) {
-            student.setFirstName((String) map.get("lastName"));
+            student.setLastName((String) map.get("lastName"));
         }
         if (map.containsKey("studentId")) {
-            student.setFirstName((String) map.get("studentId"));
+            student.setStudentId((String) map.get("studentId"));
         }
         studentService.update(student);
 

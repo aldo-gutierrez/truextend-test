@@ -32,6 +32,11 @@ dependencies {
     compile 'io.swagger:swagger-core:1.5.3'
 
     compile 'ch.qos.logback:logback-classic:1.0.13'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile 'org.powermock:powermock-api-mockito:1.7.4'
 }
 
 repositories {
@@ -90,4 +95,8 @@ swagger {
         swaggerDirectory = "${project.rootDir}/swagger"
         attachSwaggerArtifact = true
     }
+}
+
+test {
+    useJUnitPlatform()
 }
