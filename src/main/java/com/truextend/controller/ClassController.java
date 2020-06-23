@@ -7,6 +7,7 @@ import com.truextend.model.Class0;
 import com.truextend.model.Student;
 import com.truextend.service.ClassService;
 import com.truextend.service.StudentService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Path("/class")
+@Api(value="/class")
 @Transactional
 public class ClassController {
 

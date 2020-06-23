@@ -1,3 +1,7 @@
+plugins {
+    id 'com.benjaminsproule.swagger' version '1.0.8'
+}
+
 apply plugin: 'war'
 apply plugin: "findbugs"
 
@@ -19,8 +23,9 @@ dependencies {
 
     compile 'org.jboss.resteasy:resteasy-jackson2-provider:4.5.5.Final'
 
-    compile 'io.springfox:springfox-swagger2:2.9.2'
-    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+//    compile 'io.springfox:springfox-swagger2:2.8.0'
+//    compile 'io.springfox:springfox-swagger-ui:2.8.0'
+    compile 'io.swagger:swagger-core:1.5.3'
 }
 
 repositories {
@@ -37,5 +42,39 @@ tasks.withType(FindBugs) {
     reports {
         xml.enabled false
         html.enabled true
+    }
+}
+
+swagger {
+    apiSource {
+        springmvc = false
+        locations = [ 'com.truextend.controller' ]
+        schemes = [ 'http', 'https' ]
+        host = 'localhost:8080'
+        basePath = '/rest'
+        info {
+            title = 'Swagger Gradle Plugin Sample'
+            version = 'v1'
+            // use markdown here because I'm using markdown for output,
+            // if you need to use html or other markup language, you need to use your target language
+            description = 'This is a sample.'
+            termsOfService = 'http://www.example.com/termsOfService'
+            contact {
+                email = 'email@email.com'
+                name = 'Name'
+                url = 'http://www.example.com'
+            }
+            license {
+                url = 'http://www.apache.org/licenses/LICENSE-2.0.html'
+                name = 'Apache 2.0'
+            }
+        }
+        templatePath = "${project.rootDir}/templates/strapdown.html.hbs"
+        outputPath = "${project.rootDir}/generated/document.html"
+        swaggerDirectory = "${project.rootDir}/generated/swagger-ui"
+        swaggerFileName = 'publicSwagger'
+        //swaggerApiReader = 'com.wordnik.swagger.jaxrs.reader.DefaultJaxrsApiReader'
+        //modelConverters = [ 'io.swagger.validator.BeanValidator' ]
+        attachSwaggerArtifact = true
     }
 }
