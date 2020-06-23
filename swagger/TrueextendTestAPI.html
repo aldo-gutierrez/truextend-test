@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+<title>API Document</title>
+
+<xmp theme="united" style="display:none;">
+#Truextend Test Sample App
+
+
+## HTTP | HTTPS://localhost:8080/rest
+
+
+This is a sample test app for testing java spring knowledge.
+
+
+[**Contact the developer**](mailto:aldo.agg@gmail.com)
+
+
+**Version** v1
+
+[**Terms of Service**](http://swagger.io/terms/)
+
+[**Apache 2.0**](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+
+
+
+
+
+
+
+
+
+# APIs
+
+
+## /class
+
+
+### GET
+
+<a id="list">Get a List of Classes</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+
+
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+### POST
+
+
+<a id="insertUser">Insert a Class</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+
+
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /class/{classId}/students
+
+
+### GET
+
+<a id="listClasses">Get a List of Classes</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>classId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /class/{id}
+
+
+### GET
+
+<a id="selectUsers">Select a Class</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+### PUT
+
+<a id="updateUser">Update a Student</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+### DELETE
+
+<a id="deleteUser">Delete a Student (AUTO)</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /student
+
+
+### GET
+
+<a id="list">Get a List of Students</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+
+
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+### POST
+
+
+<a id="insertUser">Insert a Student</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+
+
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /student/{id}
+
+
+### GET
+
+<a id="selectUsers">Select a Student</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+### PUT
+
+<a id="updateUser">Update a Student</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+**Content-Type: ** application/json
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+### DELETE
+
+<a id="deleteUser">Delete a Student (AUTO)</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>id</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+## /student/{studentId}/class
+
+
+### GET
+
+<a id="listClasses">Get a List of Classes</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>studentId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## /student/{studentId}/class/{classId}
+
+
+
+
+### PUT
+
+<a id="assignClassToStudent">Assign Class to a Student</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>classId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+<tr>
+    <th>studentId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+### DELETE
+
+<a id="unassignClassToStudent">Remove Role from a User</a>
+
+
+
+
+
+
+
+
+
+#### Request
+
+
+
+##### Parameters
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Located in</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Default</th>
+        <th>Schema</th>
+    </tr>
+
+
+
+<tr>
+    <th>classId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+<tr>
+    <th>studentId</th>
+    <td>path</td>
+    <td>yes</td>
+    <td></td>
+    <td> - </td>
+
+    
+            <td>integer (int64)</td>
+    
+
+</tr>
+
+
+</table>
+
+
+
+#### Response
+
+**Content-Type: ** application/json
+
+
+| Status Code | Reason      | Response Model |
+|-------------|-------------|----------------|
+| default    | successful operation |  - |
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Definitions
+
+
+
+</xmp>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>
