@@ -33,7 +33,7 @@ public class StudentController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=1, value="Get a List of Students")
-    public Response list() throws JsonProcessingException {
+    public Response listStudents() throws JsonProcessingException {
         List<Student> students = studentService.selectAll();
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(students);
@@ -44,7 +44,7 @@ public class StudentController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=2, value="Select a Student")
-    public Response selectUsers(@PathParam("id") Long id) throws JsonProcessingException {
+    public Response selectStudent(@PathParam("id") Long id) throws JsonProcessingException {
         Student student = studentService.selectById(id);
         if (student == null) {
             throw new NotFoundException(String.format( "Student with Id[%d] not found", id));
@@ -60,7 +60,7 @@ public class StudentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(position=3, value="Insert a Student")
-    public Response insertUser( Map<String, Object> map ) throws JsonProcessingException {
+    public Response insertStudent( Map<String, Object> map ) throws JsonProcessingException {
         Student student = new Student();
         student.setFirstName((String) map.get("firstName"));
         student.setLastName((String) map.get("lastName"));
@@ -76,7 +76,7 @@ public class StudentController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(position=4, value="Update a Student")
-    public Response updateUser( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
+    public Response updateStudent( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
         Student student = studentService.selectById( id );
         if( student == null )
         {
@@ -102,7 +102,7 @@ public class StudentController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=5, value="Delete a Student")
-    public Response deleteUser( @PathParam("id") Long id )
+    public Response deleteStudent( @PathParam("id") Long id )
     {
         Student student = studentService.selectById( id );
         if( student == null )
@@ -154,7 +154,7 @@ public class StudentController {
     @DELETE
     @Path("/{studentId}/class/{classId}")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(position=8, value = "Unassing a Class to a Student")
+    @ApiOperation(position=8, value = "Unassign a Class to a Student")
     public Response unassignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) {
         Student student = studentService.selectById( studentId );
         if( student == null )

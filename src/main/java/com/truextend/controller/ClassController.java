@@ -33,7 +33,7 @@ public class ClassController {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=1, value="Get a List of Classes")
-    public Response list() throws JsonProcessingException {
+    public Response listClasses() throws JsonProcessingException {
         List<Class0> classes = classService.selectAll();
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(classes);
@@ -44,7 +44,7 @@ public class ClassController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=2, value="Select a Class")
-    public Response selectUsers(@PathParam("id") Long id) throws JsonProcessingException {
+    public Response selectClass(@PathParam("id") Long id) throws JsonProcessingException {
         Class0 class0 = classService.selectById( id );
         if (class0 == null) {
             throw new NotFoundException(String.format( "Class with Id[%d] not found", id));
@@ -60,7 +60,7 @@ public class ClassController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(position=3, value="Insert a Class")
-    public Response insertUser( Map<String, Object> map ) throws JsonProcessingException {
+    public Response insertClass( Map<String, Object> map ) throws JsonProcessingException {
         Class0 class0 = new Class0();
         class0.setCode((String) map.get("code"));
         class0.setTitle((String) map.get("title"));
@@ -76,7 +76,7 @@ public class ClassController {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(position=4, value="Update a Class")
-    public Response updateUser( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
+    public Response updateClass( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
         Class0 class0 = classService.selectById( id );
         if( class0 == null )
         {
@@ -102,7 +102,7 @@ public class ClassController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=5, value="Delete a Class")
-    public Response deleteUser( @PathParam("id") Long id )
+    public Response deleteClass( @PathParam("id") Long id )
     {
         Class0 class0 = classService.selectById( id );
         if( class0 == null )

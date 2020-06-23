@@ -3,9 +3,12 @@ Truextend Java Test
 
 **Build Requirements**
 
-Gradle 3.5.1 - 5.6
+Gradle 3.5.1 - 5.6.2
+  (gradle 6 doesn't support findbugs)
 
 Java 8
+
+Tomcat 8.5
 
 
 
