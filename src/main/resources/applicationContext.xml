@@ -45,6 +45,4 @@
 
     <tx:annotation-driven transaction-manager="txManager"/>
 
-    <bean class="com.truextend.swagger.SwaggerConfig"/>
-
 </beans>
