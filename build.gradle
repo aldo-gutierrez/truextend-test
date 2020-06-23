@@ -2,6 +2,10 @@ plugins {
     id 'com.benjaminsproule.swagger' version '1.0.8'
 }
 
+plugins {
+    id "io.swagger.core.v3.swagger-gradle-plugin" version "2.1.2"
+}
+
 apply plugin: 'war'
 apply plugin: "findbugs"
 
@@ -23,9 +27,11 @@ dependencies {
 
     compile 'org.jboss.resteasy:resteasy-jackson2-provider:4.5.5.Final'
 
-//    compile 'io.springfox:springfox-swagger2:2.8.0'
-//    compile 'io.springfox:springfox-swagger-ui:2.8.0'
+    //compile 'io.springfox:springfox-swagger2:2.8.0'
+    //compile 'io.springfox:springfox-swagger-ui:2.8.0'
     compile 'io.swagger:swagger-core:1.5.3'
+
+    compile 'ch.qos.logback:logback-classic:1.0.13'
 }
 
 repositories {
@@ -45,6 +51,16 @@ tasks.withType(FindBugs) {
     }
 }
 
+resolve {
+    outputFileName = 'TrueextendTestAPI'
+    outputFormat = 'JSON'
+    prettyPrint = 'TRUE'
+    classpath = sourceSets.main.runtimeClasspath
+    resourcePackages = ['com.truextend.controller']
+    outputDir = file('swagger')
+    openApiFile = file('swagger/openApiFile.json')
+}
+
 swagger {
     apiSource {
         springmvc = false
@@ -53,15 +69,15 @@ swagger {
         host = 'localhost:8080'
         basePath = '/rest'
         info {
-            title = 'Swagger Gradle Plugin Sample'
+            title = 'Truextend Test Sample App'
             version = 'v1'
             // use markdown here because I'm using markdown for output,
             // if you need to use html or other markup language, you need to use your target language
-            description = 'This is a sample.'
-            termsOfService = 'http://www.example.com/termsOfService'
+            description = 'This is a sample test app for testing java spring knowledge.'
+            termsOfService = 'http://swagger.io/terms/'
             contact {
-                email = 'email@email.com'
-                name = 'Name'
+                email = 'aldo.agg@gmail.com'
+                name = 'Aldo Gutierrez'
                 url = 'http://www.example.com'
             }
             license {
@@ -69,12 +85,9 @@ swagger {
                 name = 'Apache 2.0'
             }
         }
-        templatePath = "${project.rootDir}/templates/strapdown.html.hbs"
-        outputPath = "${project.rootDir}/generated/document.html"
-        swaggerDirectory = "${project.rootDir}/generated/swagger-ui"
-        swaggerFileName = 'publicSwagger'
-        //swaggerApiReader = 'com.wordnik.swagger.jaxrs.reader.DefaultJaxrsApiReader'
-        //modelConverters = [ 'io.swagger.validator.BeanValidator' ]
+        templatePath = "${project.rootDir}/swagger/templates/strapdown.html.hbs"
+        outputPath = "${project.rootDir}/swagger/TrueextendTestAPI.html"
+        swaggerDirectory = "${project.rootDir}/swagger"
         attachSwaggerArtifact = true
     }
 }
