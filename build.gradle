@@ -6,6 +6,9 @@ plugins {
     id "io.swagger.core.v3.swagger-gradle-plugin" version "2.1.2"
 }
 
+group = 'com.truextend'
+version = '1.0'
+
 apply plugin: 'war'
 apply plugin: "findbugs"
 
