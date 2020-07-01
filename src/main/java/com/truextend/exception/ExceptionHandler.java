@@ -1,5 +1,8 @@
 package com.truextend.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -9,6 +12,8 @@ import java.util.Map;
 
 @Provider
 public class ExceptionHandler implements ExceptionMapper<Exception> {
+    Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
+
     public static final String RESTEASY003870 = "RESTEASY003870";
     public static final String RESTEASY003210 = "RESTEASY003210";
     public static final String ILLEGAL_UNQUOTED_CHARACTER = "Illegal unquoted character";
@@ -20,6 +25,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
         if (e instanceof BusinessException) {
             Map<String, Object> result = new HashMap<>();
             result.put("error", e.getMessage());
+            logger.warn(e.getMessage());
             return Response.status(((BusinessException) e).getStatus()).entity(result).type(MediaType.APPLICATION_JSON).build();
 
         } else {
@@ -37,7 +43,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
                     map.put("error", e.getMessage());
                 }
             }
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return Response.serverError().entity(map).type(MediaType.APPLICATION_JSON).build();
         }
     }

@@ -7,6 +7,8 @@ import com.truextend.exception.BusinessException;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
 import com.truextend.model.StudentClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class StudentService {
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     StudentDAO studentDAO;
 
     ClassDAO classDAO;
@@ -61,9 +65,9 @@ public class StudentService {
         if (otherStudent != null) {
             throw new BusinessException("studentId is taken");
         }
-
-
-        return studentDAO.insert(student);
+        Long id = studentDAO.insert(student);
+        logger.debug("Inserted student {}.", student.getStudentId());
+        return id;
     }
 
     public void update(Student student) {
@@ -87,6 +91,7 @@ public class StudentService {
             }
         }
         studentDAO.update(student);
+        logger.debug("Updated student {}.", student.getStudentId());
     }
 
     public void delete(Student student) {
@@ -97,6 +102,7 @@ public class StudentService {
             studentClassDAO.delete(studentClass);
         }
         studentDAO.delete(student);
+        logger.debug("Deleted student {}.", student.getStudentId());
     }
 
     public List<Student> selectAllByClass(Class0 class0) {
