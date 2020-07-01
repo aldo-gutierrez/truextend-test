@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-
+    <context:property-placeholder location="classpath:application.properties" />
     <context:component-scan base-package="com.truextend">
         <context:include-filter type="annotation" expression="javax.ws.rs.Path"/>
         <context:include-filter type="annotation" expression="javax.ws.rs.ext.Provider"/>
@@ -14,10 +14,10 @@
 
     <bean id="dataSource"
           class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:db;DB_CLOSE_DELAY=-1"/>
-        <property name="username" value="sa"/>
-        <property name="password" value="sa"/>
+        <property name="driverClassName" value="${connection.driverClassName}"/>
+        <property name="url" value="${connection.url}"/>
+        <property name="username" value="${connection.username}"/>
+        <property name="password" value="${connection.password}"/>
     </bean>
 
     <bean id="sessionFactory"
@@ -32,7 +32,7 @@
                     create-drop
                 </prop>
                 <prop key="hibernate.dialect">
-                    org.hibernate.dialect.H2Dialect
+                    ${connection.dialect}
                 </prop>
             </props>
         </property>
