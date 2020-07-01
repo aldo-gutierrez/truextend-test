@@ -1,18 +1,21 @@
 package com.truextend.service;
 
 import com.truextend.dao.ClassDAO;
+import com.truextend.dao.Pagination;
 import com.truextend.dao.StudentClassDAO;
 import com.truextend.dao.StudentDAO;
 import com.truextend.exception.BusinessException;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
 import com.truextend.model.StudentClass;
+import org.hibernate.criterion.Criterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import org.hibernate.criterion.Order;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +51,15 @@ public class StudentService {
     }
 
     public List<Student> selectAll() {
-        return studentDAO.selectAll();
+        return studentDAO.selectAllBy();
+    }
+
+    public List<Student> selectAllBy(List<Criterion> criterionList, Pagination pagination, List<Order> orders) {
+        return studentDAO.selectAllBy(criterionList, pagination, orders);
+    }
+
+    public Long countAllBy(List<Criterion> criterionList) {
+        return studentDAO.countAllBy(criterionList);
     }
 
     public Long insert(Student student) {

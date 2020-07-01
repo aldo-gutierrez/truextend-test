@@ -1,7 +1,11 @@
 package com.truextend.dao;
 
 import org.hibernate.*;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -26,17 +30,42 @@ public abstract class BaseHibernateDAO<T, K extends Serializable> {
         return (T) c1.uniqueResult();
     }
 
-    public List<T> selectAll() {
+    public List<T> selectAllBy() {
         Query query = getSession().createQuery("from " + getClazz().getName());
         return (List<T>) query.list();
     }
 
     public List<T> selectAllBy(Map<String, Object> map) {
-        Criteria c1 = getSession().createCriteria(getClazz());
+        Criteria criteria = getSession().createCriteria(getClazz());
         for (String key : map.keySet()) {
-            c1.add(Restrictions.eq(key, map.get(key)));
+            criteria.add(Restrictions.eq(key, map.get(key)));
         }
-        return (List<T>) c1.list();
+        return (List<T>) criteria.list();
+    }
+
+    public long countAllBy(List<Criterion> criterionList) {
+        Criteria criteria = getSession().createCriteria(getClazz());
+        for (Criterion criterion: criterionList) {
+            criteria.add(criterion);
+        }
+        criteria.setProjection(Projections.rowCount());
+        Long count = (Long) criteria.uniqueResult();
+        return count;
+    }
+
+    public List<T> selectAllBy(List<Criterion> criterionList, Pagination pagination, List<Order> orders) {
+        Criteria criteria = getSession().createCriteria(getClazz());
+        if (pagination != null && pagination.getPageNumber() != null) {
+            criteria.setFirstResult(pagination.calculateOffset());
+            criteria.setMaxResults(pagination.getPageSize());
+        }
+        for (Criterion criterion: criterionList) {
+            criteria.add(criterion);
+        }
+        for (Order order : orders) {
+            criteria.addOrder(order);
+        }
+        return (List<T>) criteria.list();
     }
 
     public K insert(T object) {

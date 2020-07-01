@@ -42,6 +42,8 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
                 } else {
                     map.put("error", e.getMessage());
                 }
+            } else {
+                map.put("error", e instanceof  NullPointerException ? "NullPointerException" : "Unknown Error");
             }
             logger.error(e.getMessage(), e);
             return Response.serverError().entity(map).type(MediaType.APPLICATION_JSON).build();

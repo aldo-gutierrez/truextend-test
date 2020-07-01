@@ -48,7 +48,7 @@ public class ClassService {
     }
 
     public List<Class0> selectAll() {
-        return classDAO.selectAll();
+        return classDAO.selectAllBy();
     }
 
     public Long insert(Class0 class0) {
