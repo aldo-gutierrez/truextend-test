@@ -19,23 +19,23 @@ import java.util.stream.Collectors;
 @Component
 public class ClassService {
 
-    @Autowired
     ClassDAO classDAO;
 
-    @Autowired
     StudentClassDAO studentClassDAO;
 
-    @Autowired
     StudentDAO studentDAO;
 
+    @Autowired
     public void setClassDAO(ClassDAO classDAO) {
         this.classDAO = classDAO;
     }
 
+    @Autowired
     public void setStudentClassDAO(StudentClassDAO studentClassDAO) {
         this.studentClassDAO = studentClassDAO;
     }
 
+    @Autowired
     public void setStudentDAO(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
     }

@@ -23,11 +23,19 @@ import java.util.Map;
 @Transactional
 public class StudentController {
 
-    @Autowired
     StudentService studentService;
 
-    @Autowired
     ClassService classService;
+
+    @Autowired
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @Autowired
+    public void setClassService(ClassService classService) {
+        this.classService = classService;
+    }
 
     @GET
     @Path("/")
