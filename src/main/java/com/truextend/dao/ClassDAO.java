@@ -9,8 +9,12 @@ import com.truextend.model.Class0;
 @Repository
 @Transactional
 public class ClassDAO extends BaseHibernateDAO<Class0, Long> {
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public SessionFactory getSessionFactory() {

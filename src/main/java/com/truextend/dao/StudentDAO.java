@@ -11,8 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class StudentDAO extends BaseHibernateDAO<Student, Long> {
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public SessionFactory getSessionFactory() {

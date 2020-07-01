@@ -1,16 +1,21 @@
 package com.truextend.service;
 
 import com.truextend.dao.ClassDAO;
+import com.truextend.dao.Pagination;
 import com.truextend.dao.StudentClassDAO;
 import com.truextend.dao.StudentDAO;
 import com.truextend.exception.BusinessException;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
 import com.truextend.model.StudentClass;
+import org.hibernate.criterion.Criterion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import org.hibernate.criterion.Order;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,23 +23,25 @@ import java.util.stream.Collectors;
 
 @Component
 public class StudentService {
-    @Autowired
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
     StudentDAO studentDAO;
 
-    @Autowired
     ClassDAO classDAO;
 
-    @Autowired
     StudentClassDAO studentClassDAO;
 
+    @Autowired
     public void setStudentDAO(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
     }
 
+    @Autowired
     public void setClassDAO(ClassDAO classDAO) {
         this.classDAO = classDAO;
     }
 
+    @Autowired
     public void setStudentClassDAO(StudentClassDAO studentClassDAO) {
         this.studentClassDAO = studentClassDAO;
     }
@@ -44,7 +51,15 @@ public class StudentService {
     }
 
     public List<Student> selectAll() {
-        return studentDAO.selectAll();
+        return studentDAO.selectAllBy();
+    }
+
+    public List<Student> selectAllBy(List<Criterion> criterionList, Pagination pagination, List<Order> orders) {
+        return studentDAO.selectAllBy(criterionList, pagination, orders);
+    }
+
+    public Long countAllBy(List<Criterion> criterionList) {
+        return studentDAO.countAllBy(criterionList);
     }
 
     public Long insert(Student student) {
@@ -61,9 +76,9 @@ public class StudentService {
         if (otherStudent != null) {
             throw new BusinessException("studentId is taken");
         }
-
-
-        return studentDAO.insert(student);
+        Long id = studentDAO.insert(student);
+        logger.debug("Inserted student {}.", student.getStudentId());
+        return id;
     }
 
     public void update(Student student) {
@@ -87,6 +102,7 @@ public class StudentService {
             }
         }
         studentDAO.update(student);
+        logger.debug("Updated student {}.", student.getStudentId());
     }
 
     public void delete(Student student) {
@@ -97,6 +113,7 @@ public class StudentService {
             studentClassDAO.delete(studentClass);
         }
         studentDAO.delete(student);
+        logger.debug("Deleted student {}.", student.getStudentId());
     }
 
     public List<Student> selectAllByClass(Class0 class0) {

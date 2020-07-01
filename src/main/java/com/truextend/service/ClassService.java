@@ -7,6 +7,8 @@ import com.truextend.exception.BusinessException;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
 import com.truextend.model.StudentClass;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,24 +20,25 @@ import java.util.stream.Collectors;
 
 @Component
 public class ClassService {
+    Logger logger = LoggerFactory.getLogger(ClassService.class);
 
-    @Autowired
     ClassDAO classDAO;
 
-    @Autowired
     StudentClassDAO studentClassDAO;
 
-    @Autowired
     StudentDAO studentDAO;
 
+    @Autowired
     public void setClassDAO(ClassDAO classDAO) {
         this.classDAO = classDAO;
     }
 
+    @Autowired
     public void setStudentClassDAO(StudentClassDAO studentClassDAO) {
         this.studentClassDAO = studentClassDAO;
     }
 
+    @Autowired
     public void setStudentDAO(StudentDAO studentDAO) {
         this.studentDAO = studentDAO;
     }
@@ -45,7 +48,7 @@ public class ClassService {
     }
 
     public List<Class0> selectAll() {
-        return classDAO.selectAll();
+        return classDAO.selectAllBy();
     }
 
     public Long insert(Class0 class0) {
@@ -59,7 +62,9 @@ public class ClassService {
         if (otherClass != null) {
             throw new BusinessException("code is taken");
         }
-        return classDAO.insert(class0);
+        Long id = classDAO.insert(class0);
+        logger.debug("Inserted class {}.", class0.getCode());
+        return id;
     }
 
     public void update(Class0 class0) {
@@ -80,6 +85,7 @@ public class ClassService {
             }
         }
         classDAO.update(class0);
+        logger.debug("Updated class {}.", class0.getCode());
     }
 
     public void delete(Class0 class0) {
@@ -90,6 +96,7 @@ public class ClassService {
             studentClassDAO.delete(studentClass);
         }
         classDAO.delete(class0);
+        logger.debug("Deleted class {}.", class0.getCode());
     }
 
     public List<Class0> selectAllByStudent(Student student) {

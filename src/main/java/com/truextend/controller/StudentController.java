@@ -2,6 +2,8 @@ package com.truextend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.truextend.dao.Pagination;
+import com.truextend.dao.PaginationHelper;
 import com.truextend.exception.NotFoundException;
 import com.truextend.model.Class0;
 import com.truextend.model.Student;
@@ -9,12 +11,15 @@ import com.truextend.service.ClassService;
 import com.truextend.service.StudentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,20 +28,37 @@ import java.util.Map;
 @Transactional
 public class StudentController {
 
-    @Autowired
     StudentService studentService;
 
-    @Autowired
     ClassService classService;
+
+    @Autowired
+    public void setStudentService(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @Autowired
+    public void setClassService(ClassService classService) {
+        this.classService = classService;
+    }
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @ApiOperation(position=1, value="Get a List of Students")
-    public Response listStudents() throws JsonProcessingException {
-        List<Student> students = studentService.selectAll();
+    public Response listStudents(@QueryParam("pageSize") Integer pageSize, @QueryParam("pageNumber") Integer pageNumber,
+                                 @QueryParam("order") String order, @QueryParam("criteria") String criteria) throws JsonProcessingException {
+
+        Pagination pagination = new Pagination(pageNumber, pageSize);
+        List<Order> orders = PaginationHelper.parseOrders(order);
+        List<Criterion> criterionList = PaginationHelper.parseCriteria(criteria);
+        List<Student> students = studentService.selectAllBy(criterionList, pagination, orders);
+        Long studentCount = studentService.countAllBy(criterionList);
+        Map<String,Object> mapResponse = new HashMap<String,Object>();
+        mapResponse.put( "total", studentCount );
+        mapResponse.put( "results", students );
         ObjectMapper objectMapper = new ObjectMapper();
-        String result = objectMapper.writeValueAsString(students);
+        String result = objectMapper.writeValueAsString(mapResponse);
         return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
     }
 
