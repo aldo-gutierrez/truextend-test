@@ -1,5 +1,6 @@
 package com.truextend.automation.http;
 
+import java.nio.charset.Charset;
 import java.util.*;
 
 public class HTTPResponse {
@@ -26,7 +27,7 @@ public class HTTPResponse {
         if (body == null) {
             return null;
         } else {
-            return new String(body);
+            return new String(body, Charset.forName("UTF8"));
         }
     }
 

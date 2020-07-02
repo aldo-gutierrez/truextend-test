@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Matchers.anyObject;
 
+@Tags(value = {@Tag("unit-test")})
 public class ClassServiceTest {
 
     @BeforeAll

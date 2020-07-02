@@ -10,6 +10,7 @@ import static org.mockito.Matchers.anyObject;
 
 import org.mockito.Mockito;
 
+@Tags(value = {@Tag("unit-test")})
 public class StudentServiceTest {
 
 

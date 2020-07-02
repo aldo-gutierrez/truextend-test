@@ -29,6 +29,14 @@ http://localhost:8080/truextend/rest/class
  swagger/TruextendTestAPI.html rest generated documentation
  swagger/TruextendTestAPI.json swagger generated json file that can be used on https://editor.swagger.io/ 
 
+to run unit tests run
+
+`gradle build`
+
+to run api integration test, start tomcat and the run
+
+`gradle build -DincludeTags='integration-test' -DexcludeTags='unit-test' -i`
+
 
 **Endpoints Examples**
 

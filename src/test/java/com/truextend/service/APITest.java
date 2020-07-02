@@ -2,11 +2,7 @@ package com.truextend.service;
 
 import com.truextend.automation.http.HTTPResponse;
 import com.truextend.automation.http.HTTPTester;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import javax.ws.rs.Path;
+import org.junit.jupiter.api.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -15,6 +11,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * run this test with
+ *   gradle build -DincludeTags='integration-test' -DexcludeTags='unit-test' -i
+ * or change tag name to "unit-test" to run it from IDE
+ */
+@Tags(value = {@Tag("integration-test")})
 public class APITest {
     String testUrl = "http://localhost:8080/truextend/rest";
     HTTPTester httpTester;
