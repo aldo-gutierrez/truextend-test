@@ -97,7 +97,7 @@ public class ClassController {
             class0.setTitle((String) map.get("title"));
         }
         if (map.containsKey("description")) {
-            class0.setDescription((String) map.get("title"));
+            class0.setDescription((String) map.get("description"));
         }
         classService.update(class0);
 
