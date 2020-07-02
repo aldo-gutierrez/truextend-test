@@ -1,13 +1,16 @@
 package com.truextend.service;
 
-import com.truextend.dao.StudentDAO;
+import com.truextend.dao.IStudentDAO;
 import com.truextend.exception.BusinessException;
 import com.truextend.model.Student;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Matchers.anyObject;
+
 import org.mockito.Mockito;
 
+@Tags(value = {@Tag("unit-test")})
 public class StudentServiceTest {
 
 
@@ -23,7 +26,7 @@ public class StudentServiceTest {
 
     @Test
     public void testInsert(){
-        StudentDAO studentDAO = Mockito.mock(StudentDAO.class);
+        IStudentDAO studentDAO = Mockito.mock(IStudentDAO.class);
         StudentService studentService = new StudentService();
         studentService.setStudentDAO(studentDAO);
 
@@ -49,6 +52,7 @@ public class StudentServiceTest {
             Assertions.assertEquals("lastName is required", ex.getMessage());
         }
         student.setLastName("Perez");
+        Mockito.when(studentDAO.save(anyObject())).thenReturn(student);
         studentService.insert(student);
 
 
@@ -57,7 +61,7 @@ public class StudentServiceTest {
         student2.setFirstName("Jose");
         student2.setLastName("Perez");
         try {
-            Mockito.when(studentDAO.selectBy("studentId", "44668877")).thenReturn(student);
+            Mockito.when(studentDAO.findByStudentId("44668877")).thenReturn(student);
             studentService.insert(student2);
             fail("A student with the same studentId can't be insert");
         } catch (BusinessException ex) {

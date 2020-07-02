@@ -1,13 +1,15 @@
 package com.truextend.service;
 
-import com.truextend.dao.ClassDAO;
+import com.truextend.dao.IClassDAO;
 import com.truextend.exception.BusinessException;
 import com.truextend.model.Class0;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.Matchers.anyObject;
 
+@Tags(value = {@Tag("unit-test")})
 public class ClassServiceTest {
 
     @BeforeAll
@@ -22,7 +24,7 @@ public class ClassServiceTest {
 
     @Test
     public void testInsert(){
-        ClassDAO classDAO = Mockito.mock(ClassDAO.class);
+        IClassDAO classDAO = Mockito.mock(IClassDAO.class);
         ClassService classService = new ClassService();
         classService.setClassDAO(classDAO);
 
@@ -42,6 +44,7 @@ public class ClassServiceTest {
         }
         class01.setTitle("Algebra 1");
         class01.setDescription("Algebra Basica y Matrices");
+        Mockito.when(classDAO.save(anyObject())).thenReturn(class01);
         classService.insert(class01);
 
 
@@ -49,7 +52,7 @@ public class ClassServiceTest {
         class02.setCode("MAT-101");
         class02.setTitle("Algebra de Baldor");
         try {
-            Mockito.when(classDAO.selectBy("code", "MAT-101")).thenReturn(class01);
+            Mockito.when(classDAO.findByCode("MAT-101")).thenReturn(class01);
             classService.insert(class02);
             fail("A class with the same code can't be insert");
         } catch (BusinessException ex) {
