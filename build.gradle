@@ -11,12 +11,8 @@ apply plugin: "findbugs"
 
 dependencies {
 
-    compile "org.jboss.resteasy:resteasy-core:4.5.5.Final"
-    compile "org.jboss.resteasy:resteasy-jaxb-provider:4.5.5.Final"
-    compile 'org.jboss.resteasy:resteasy-servlet-initializer:4.5.5.Final'
-    compile 'org.jboss.resteasy:resteasy-spring:4.5.5.Final'
-
     compile "org.springframework:spring-webmvc:5.2.7.RELEASE"
+    compile 'org.apache.httpcomponents:httpclient:4.5.12'
 
     compileOnly 'org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec:1.0.2.Final'
 
@@ -70,7 +66,7 @@ resolve {
 
 swagger {
     apiSource {
-        springmvc = false
+        springmvc = true
         locations = [ 'com.truextend.controller' ]
         schemes = [ 'http', 'https' ]
         host = 'localhost:8080'

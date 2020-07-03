@@ -14,17 +14,18 @@ import io.swagger.annotations.ApiOperation;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/student")
 @Api(value="/student")
+@RestController
 @Transactional
 public class StudentController {
 
@@ -42,12 +43,10 @@ public class StudentController {
         this.classService = classService;
     }
 
-    @GET
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/student", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=1, value="Get a List of Students")
-    public Response listStudents(@QueryParam("pageSize") Integer pageSize, @QueryParam("pageNumber") Integer pageNumber,
-                                 @QueryParam("order") String order, @QueryParam("criteria") String criteria) throws JsonProcessingException {
+    public ResponseEntity<String> listStudents(@RequestParam(value = "pageSize", required = false) Integer pageSize, @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                               @RequestParam(value = "order", required = false) String order, @RequestParam(value = "criteria", required = false) String criteria) throws JsonProcessingException {
 
         Pagination pagination = new Pagination(pageNumber, pageSize);
         List<Order> orders = PaginationHelper.parseOrders(order);
@@ -59,30 +58,25 @@ public class StudentController {
         mapResponse.put( "results", students );
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(mapResponse);
-        return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=2, value="Select a Student")
-    public Response selectStudent(@PathParam("id") Long id) throws JsonProcessingException {
+    public ResponseEntity<String>  selectStudent(@PathVariable("id") Long id) throws JsonProcessingException {
         Student student = studentService.selectById(id);
         if (student == null) {
             throw new NotFoundException(String.format( "Student with Id[%d] not found", id));
         } else {
             ObjectMapper objectMapper = new ObjectMapper();
             String result = objectMapper.writeValueAsString(student);
-            return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
     }
 
-    @POST
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @PostMapping(value = "/student", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=3, value="Insert a Student")
-    public Response insertStudent( Map<String, Object> map ) throws JsonProcessingException {
+    public ResponseEntity<String>  insertStudent( @RequestBody Map<String, Object> map ) throws JsonProcessingException {
         Student student = new Student();
         student.setFirstName((String) map.get("firstName"));
         student.setLastName((String) map.get("lastName"));
@@ -90,15 +84,12 @@ public class StudentController {
         studentService.insert(student);
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(student);
-        return Response.status(201).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @PUT
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @PutMapping(value = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=4, value="Update a Student")
-    public Response updateStudent( @PathParam("id") Long id, Map<String, Object> map ) throws JsonProcessingException {
+    public ResponseEntity<String>  updateStudent( @PathVariable("id") Long id,@RequestBody Map<String, Object> map ) throws JsonProcessingException {
         Student student = studentService.selectById( id );
         if( student == null )
         {
@@ -117,14 +108,12 @@ public class StudentController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(student);
-        return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @DeleteMapping(value = "/student/{id}")
     @ApiOperation(position=5, value="Delete a Student")
-    public Response deleteStudent( @PathParam("id") Long id )
+    public ResponseEntity<String>  deleteStudent( @PathVariable("id") Long id )
     {
         Student student = studentService.selectById( id );
         if( student == null )
@@ -132,14 +121,12 @@ public class StudentController {
             throw new NotFoundException(String.format( "Student with Id[%d] not found", id));
         }
         studentService.delete(student);
-        return Response.noContent().status( 204 ).header( "content-type", "application/json" ).build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GET
-    @Path("/{studentId}/class")
-    @Produces(MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/student/{studentId}/class", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=6, value="Get a List of Classes")
-    public Response listClasses(@PathParam("studentId") Long studentId) throws JsonProcessingException {
+    public ResponseEntity<String>  listClasses(@PathVariable("studentId") Long studentId) throws JsonProcessingException {
         Student student = studentService.selectById( studentId );
         if( student == null )
         {
@@ -148,14 +135,12 @@ public class StudentController {
         List<Class0> classes = classService.selectAllByStudent(student);
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(classes);
-        return Response.status(200).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PUT
-    @Path("/{studentId}/class/{classId}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @PutMapping(value = "/student/{studentId}/class/{classId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(position=7, value = "Assign a Class to a Student")
-    public Response assignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) throws JsonProcessingException {
+    public ResponseEntity<String>  assignClassToStudent(@PathVariable("studentId") Long studentId, @PathVariable("classId") Long classId) throws JsonProcessingException {
         Student student = studentService.selectById( studentId );
         if( student == null )
         {
@@ -170,14 +155,12 @@ public class StudentController {
         studentService.assignClassToStudent(class0, student);
         ObjectMapper objectMapper = new ObjectMapper();
         String result = objectMapper.writeValueAsString(class0);
-        return Response.status(201).header("content-type", MediaType.APPLICATION_JSON).entity(result).build();
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @DELETE
-    @Path("/{studentId}/class/{classId}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @DeleteMapping(value = "/student/{studentId}/class/{classId}")
     @ApiOperation(position=8, value = "Unassign a Class to a Student")
-    public Response unassignClassToStudent(@PathParam("studentId") Long studentId, @PathParam("classId") Long classId) {
+    public ResponseEntity<String>  unassignClassToStudent(@PathVariable("studentId") Long studentId, @PathVariable("classId") Long classId) {
         Student student = studentService.selectById( studentId );
         if( student == null )
         {
@@ -189,6 +172,6 @@ public class StudentController {
             throw new NotFoundException(String.format( "Class with Id[%d] not found", studentId));
         }
         studentService.unAssignClassToStudent(class0, student);
-        return Response.noContent().status( 204 ).header( "content-type", "application/json" ).build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

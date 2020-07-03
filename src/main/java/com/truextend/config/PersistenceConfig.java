@@ -1,4 +1,4 @@
-package com.truextend.dao;
+package com.truextend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
