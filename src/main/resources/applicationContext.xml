@@ -9,39 +9,4 @@
     <context:property-placeholder location="classpath:application.properties" />
     <context:annotation-config/>
 
-    <jpa:repositories base-package="com.truextend.dao" />
-
-    <bean id="dataSource"
-          class="org.apache.tomcat.dbcp.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="${connection.driverClassName}"/>
-        <property name="url" value="${connection.url}"/>
-        <property name="username" value="${connection.username}"/>
-        <property name="password" value="${connection.password}"/>
-    </bean>
-
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource"
-                  ref="dataSource"/>
-        <property name="packagesToScan"
-                  value="com.truextend.model"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.hbm2ddl.auto">
-                    create-drop
-                </prop>
-                <prop key="hibernate.dialect">
-                    ${connection.dialect}
-                </prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="entityManagerFactory"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
 </beans>
